@@ -2,18 +2,20 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('users/', views.user_list, name='user_list'),
-    path('users/create/', views.user_create, name='user_create'),
-    path('users/<int:pk>/edit/', views.user_update, name='user_update'),
-    path('users/<int:pk>/delete/', views.user_delete, name='user_delete'),
-    path('users/<int:pk>/', views.user_details, name='user_details'),
+    
+    path('', views.home, name='home'),
+    path('Users/', views.user_list, name='user_list'),
+    path('Users/Create/', views.user_create, name='user_create'),
+    path('Users/Edit/<int:pk>/', views.user_update, name='user_update'),
+    path('Users/Delete/<int:pk>/', views.user_delete, name='user_delete'),
+    path('Users/Details/<int:pk>/', views.user_details, name='user_details'),
 
-    path('articles/', views.article_list, name='article_list'),
-    path('articles/create/', views.article_create, name='article_create'),
-    path('articles/<int:pk>/edit/', views.article_update, name='article_update'),
-    path('articles/<int:pk>/delete/', views.article_delete, name='article_delete'),
-    path('articles/<int:pk>/', views.article_details, name='article_details'),
-    path('articles/search/', views.article_search, name='article_search'),
+    path('Articles/', views.article_list, name='article_list'),
+    path('Articles/Create/', views.article_create, name='article_create'),
+    path('Articles/Edit/<int:pk>/', views.article_update, name='article_update'),
+    path('Articles/Delete/<int:pk>/', views.article_delete, name='article_delete'),
+    path('Articles/Details/<int:pk>/', views.article_details, name='article_details'),
+    path('Articles/Search/', views.article_search, name='article_search'),
 
     path('Images/', views.image_list, name='image_list'),
     #path('images/<int:pk>/process/', views.image_process, name='image_process'),

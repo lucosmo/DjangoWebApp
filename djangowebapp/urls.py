@@ -22,7 +22,6 @@ from django.conf.urls.static import static
 from djangowebapp import settings
 
 urlpatterns = [
-    path('', lambda request: redirect('user_list')),  # przekierowanie na listę użytkowników
     path('admin/', admin.site.urls),
     path('', include('coreapp.urls')),
 ]

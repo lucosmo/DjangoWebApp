@@ -10,6 +10,9 @@ from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpRespo
 from io import BytesIO
 
 
+def home(request):
+    return render(request, 'core/home.html')
+
 # User CRUD
 
 def user_list(request):
