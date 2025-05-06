@@ -1,0 +1,26 @@
+{% extends 'core/base.html' %}
+{% block title %}Multi Image Modifications{% endblock %}
+{% block content %}
+
+<h2>Upload and Modify Image</h2>
+
+<form method="post" enctype="multipart/form-data" class="mt-4">
+  {% csrf_token %}
+  <div class="mb-3">
+    <input type="file" name="file" class="form-control" required>
+  </div>
+  <div class="row">
+    <div class="col-md-3"><label>Width</label><input type="number" name="width" value="512" class="form-control"></div>
+    <div class="col-md-3"><label>Height</label><input type="number" name="height" value="512" class="form-control"></div>
+    <div class="col-md-3"><label>X</label><input type="number" name="x" value="100" class="form-control"></div>
+    <div class="col-md-3"><label>Y</label><input type="number" name="y" value="100" class="form-control"></div>
+    <div class="col-md-3"><label>Crop Width</label><input type="number" name="cropWidth" value="300" class="form-control"></div>
+    <div class="col-md-3"><label>Crop Height</label><input type="number" name="cropHeight" value="300" class="form-control"></div>
+  </div>
+  <button type="submit" class="btn btn-primary mt-3">Process</button>
+</form>
+
+{% if message %}
+<div class="alert alert-warning mt-3">{{ message }}</div>
+{% endif %}
+{% endblock %}

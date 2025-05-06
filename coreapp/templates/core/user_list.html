@@ -1,0 +1,14 @@
+{% extends 'core/base.html' %}
+{% block title %}Users{% endblock %}
+{% block content %}
+<h1>Users</h1>
+<a class="btn btn-primary mb-2" href="{% url 'user_create' %}">Create User</a>
+<table class="table table-striped">
+  <thead><tr><th>ID</th><th>Name</th><th></th></tr></thead>
+  <tbody>{% for u in users %}<tr><td>{{ u.id }}</td><td>{{ u.name }}</td><td>
+    <a href="{% url 'user_update' u.id %}" class="btn btn-sm btn-warning">Edit</a>
+    <a href="{% url 'user_details' u.id %}" class="btn btn-sm btn-info">Details</a>
+    <a href="{% url 'user_delete' u.id %}" class="btn btn-sm btn-danger">Delete</a>
+  </td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}

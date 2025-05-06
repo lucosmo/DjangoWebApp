@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% block title %}Articles{% endblock %}
+{% block content %}
+<h1>Articles</h1>
+<a class="btn btn-primary mb-2" href="{% url 'article_create' %}">Create Article</a>
+<a class="btn btn-primary mb-2" href="{% url 'article_search' %}">Search Articles</a>
+<table class="table table-striped">
+  <thead><tr><th>ID</th><th>Title</th><th>Author</th><th></th></tr></thead>
+  <tbody>{% for a in articles %}<tr><td>{{ a.id }}</td><td>{{ a.title }}</td><td>{{ a.body }}</td><td>{{ a.author.name }}</td><td>
+    <a href="{% url 'article_update' a.id %}" class="btn btn-sm btn-warning">Edit</a>
+    <a href="{% url 'article_details' a.id %}" class="btn btn-sm btn-info">Details</a>
+    <a href="{% url 'article_delete' a.id %}" class="btn btn-sm btn-danger">Delete</a>
+  </td></tr>{% endfor %}</tbody>
+</table>
+{% endblock %}

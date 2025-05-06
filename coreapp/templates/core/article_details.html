@@ -1,0 +1,12 @@
+{% extends 'core/base.html' %}
+{% block title %}Article Details{% endblock %}
+{% block content %}
+<h1>{{ article.title }}</h1>
+<p><strong>Author:</strong> {{ article.author.name }}</p>
+<p><strong>Content:</strong></p>
+<p>{{ article.body }}</p>
+
+<a href="{% url 'article_update' article.id %}" class="btn btn-warning">Edit</a>
+<a href="{% url 'article_delete' article.id %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'article_list' %}" class="btn btn-secondary">Back to Articles</a>
+{% endblock %}

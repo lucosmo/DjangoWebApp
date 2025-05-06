@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% block title %}Upload Image{% endblock %}
+{% block content %}
+<h2>Upload Image</h2>
+
+<form method="post" enctype="multipart/form-data" class="mt-4">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label for="id_file" class="form-label">Choose image:</label>
+    <input type="file" name="file" id="id_file" class="form-control" required>
+
+    {% if form.file.errors %}
+      <div class="text-danger">
+        {{ form.file.errors }}
+      </div>
+    {% endif %}
+  </div>
+  <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+<h3>Uploaded Images</h3>
+<div class="row">
+  {% if image %}
+    <div class="col-md-4 mb-4">
+      <img src="{{ image_url }}" class="img-fluid rounded mb-2" alt="{{ image_url }}">
+      
+
+      <div class="btn-group" role="group">
+        <a href="{% url 'image_delete' %}?fileName={{ image }}" class="btn btn-outline-danger btn-sm">Delete</a>
+        <a href="{% url 'image_grayscale' %}?fileName={{ image }}" class="btn btn-outline-secondary btn-sm">Grayscale</a>
+        <a href="{% url 'image_resize' %}?fileName={{ image }}&width=300&height=300" class="btn btn-outline-primary btn-sm">Resize</a>
+        <a href="{% url 'image_crop' %}?fileName={{ image }}&x=100&y=100&width=200&height=200" class="btn btn-outline-warning btn-sm">Crop</a>
+
+      </div>
+    </div>
+  {% else %}
+    <p>No images uploaded yet.</p>
+  {% endif %}
+</div>
+
+{% if message %}
+  <div class="alert alert-success mt-3">
+    <strong>{{ message }}</strong>
+  </div>
+{% endif %}
+{% endblock %}
