@@ -4,7 +4,8 @@
 <h1>{{ form.instance.pk|yesno:"Edit User,Create User" }}</h1>
 <form method="post">{% csrf_token %}
   {{ form.as_p }}
-  <button class="btn btn-success" type="submit">Save</button>
-  <a class="btn btn-secondary" href="{% url 'user_list' %}">Cancel</a>
+  <button class="btn btn-success" type="submit">Create</button>
+  <a class="btn btn-secondary" href="{% url 'user_list' %}">Back to List</a>
+</div></a>
 </form>
 {% endblock %}
