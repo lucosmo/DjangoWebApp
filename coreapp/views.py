@@ -8,6 +8,7 @@ from .forms import UserForm, ArticleForm, ImageForm, ImageProcessForm
 from PIL import Image as PILImage
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseRedirect
 from io import BytesIO
+from django.views.decorators.csrf import csrf_exempt
 
 
 def home(request):
@@ -18,6 +19,7 @@ def home(request):
 def user_list(request):
     return render(request, 'core/user_list.html', {'users': User.objects.all()})
 
+@csrf_exempt
 def user_create(request):
     form = UserForm(request.POST or None)
     if form.is_valid():
@@ -25,6 +27,7 @@ def user_create(request):
         return redirect('user_list')
     return render(request, 'core/user_form.html', {'form': form})
 
+@csrf_exempt
 def user_update(request, pk):
     user = get_object_or_404(User, pk=pk)
     form = UserForm(request.POST or None, instance=user)
@@ -33,6 +36,7 @@ def user_update(request, pk):
         return redirect('user_list')
     return render(request, 'core/user_form.html', {'form': form})
 
+@csrf_exempt
 def user_delete(request, pk):
     user = get_object_or_404(User, pk=pk)
     if request.method == 'POST':
@@ -49,6 +53,7 @@ def user_details(request, pk):
 def article_list(request):
     return render(request, 'core/article_list.html', {'articles': Article.objects.select_related('author').all()})
 
+@csrf_exempt
 def article_create(request):
     form = ArticleForm(request.POST or None)
     if form.is_valid():
@@ -56,6 +61,7 @@ def article_create(request):
         return redirect('article_list')
     return render(request, 'core/article_form.html', {'form': form})
 
+@csrf_exempt
 def article_update(request, pk):
     art = get_object_or_404(Article, pk=pk)
     form = ArticleForm(request.POST or None, instance=art)
@@ -64,6 +70,7 @@ def article_update(request, pk):
         return redirect('article_list')
     return render(request, 'core/article_form.html', {'form': form})
 
+@csrf_exempt
 def article_delete(request, pk):
     art = get_object_or_404(Article, pk=pk)
     if request.method == 'POST':
@@ -71,12 +78,14 @@ def article_delete(request, pk):
         return redirect('article_list')
     return render(request, 'core/article_confirm_delete.html', {'article': art})
 
+@csrf_exempt
 def article_details(request, pk):
     article = get_object_or_404(Article, pk=pk)
     return render(request, 'core/article_details.html', {'article': article})
 
 from django.db.models import Q
 
+@csrf_exempt
 def article_search(request):
     q = request.GET.get('query', '').strip()
     articles = Article.objects.select_related('author').filter(Q(body__icontains=q)) if q else Article.objects.none()
@@ -110,7 +119,7 @@ def image_list(request):
         'message': message
     })
 '''
-
+@csrf_exempt
 def image_list(request):
     image_url = None
     message = None
@@ -154,6 +163,7 @@ def image_grayscale(request):
 
     return HttpResponse(buffer, content_type='image/png')
 '''
+@csrf_exempt
 def image_grayscale(request):
     file_name = request.GET.get('fileName')
     if not file_name:
@@ -174,7 +184,7 @@ def image_grayscale(request):
     except Exception as e:
         return HttpResponse(f"Error processing image: {e}", status=500)
 
-
+@csrf_exempt
 def image_resize(request):
     file_name = request.GET.get('fileName')
     if not file_name:
@@ -198,7 +208,7 @@ def image_resize(request):
     except Exception as e:
         return HttpResponse(f"Error processing image: {e}", status=500)
 
-
+@csrf_exempt
 def image_crop(request):
     file_name = request.GET.get('fileName')
     if not file_name:
@@ -225,6 +235,7 @@ def image_crop(request):
     except Exception as e:
         return HttpResponse(f"Error processing image: {e}", status=500)
 
+@csrf_exempt
 def image_multi_modification(request):
     message = None
     if request.method == 'POST':
@@ -258,6 +269,7 @@ def image_multi_modification(request):
 
     return render(request, 'core/image_multi.html', {'message': message})
 
+@csrf_exempt
 def image_process(request, pk):
     img = get_object_or_404(Image, pk=pk)
     form = ImageProcessForm(request.POST or None)
@@ -267,6 +279,7 @@ def image_process(request, pk):
         return redirect('image_list')
     return render(request, 'core/image_process.html', {'form': form, 'image': img})
 
+@csrf_exempt
 def image_delete(request):
     file_name = request.GET.get('fileName')
     if not file_name:
@@ -286,6 +299,7 @@ def image_delete(request):
     #return HttpResponseRedirect(reverse('image_list') + f"?message={message}")
     return render(request, 'core/image_list.html', {'message': message})
 
+@csrf_exempt
 def image_details(request):
     file_name = request.GET.get('fileName')
     image_obj = get_object_or_404(Image, file__icontains=file_name)
