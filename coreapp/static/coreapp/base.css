@@ -36,13 +36,11 @@ a.navbar-brand {
     line-height: inherit;
   }
   
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+   .footer {
     white-space: nowrap;
     line-height: 60px;
   }
+
 
   .footer .nav-link {
     display: inline; 
